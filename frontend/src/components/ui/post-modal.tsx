@@ -1,4 +1,4 @@
-import React, {ReactNode, useState} from 'react';
+import {ReactNode, useState} from 'react';
 import {Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTrigger} from "@/components/ui/dialog";
 import {useForm} from "react-hook-form";
 import {z} from "zod";
@@ -21,15 +21,15 @@ const FormSchema = z.object({
 })
 type FormType = z.infer<typeof FormSchema>
 
-function PostModal({children, onComplete}: { children: ReactNode, onComplete: (res: Response) => void }) {
+function PostModal({children, onComplete}: { children: ReactNode, onComplete: (res: Record<string, any>) => void }) {
 
     const {id} = useParams();
     const form = useForm({
-        defaultValues: {title: '', body: '', userId: id}, resolver: zodResolver(FormSchema),
+        defaultValues: {title: '', body: '', userId: id as string}, resolver: zodResolver(FormSchema),
     });
     const [open, setOpen] = useState(false);
     const {toast} = useToast();
-    const {mutate, isPending} = useMutation<Response, Error, FormType>({
+    const {mutate, isPending} = useMutation<Record<string, any>, Error, FormType>({
         mutationKey: ['create-post'],
         mutationFn: (val) => addPost({title: val.title, userId: val.userId, body: val.body}),
         onSuccess: (res) => {

@@ -1,4 +1,3 @@
-import React from 'react';
 import {HeadingProp} from "@/lib/definitions";
 
 function SubHeading({email, postCount}: HeadingProp) {

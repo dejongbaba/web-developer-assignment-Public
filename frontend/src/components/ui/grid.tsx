@@ -1,4 +1,3 @@
-import React from 'react';
 import {DataTableProps} from "@/lib/definitions";
 
 import {flexRender, getCoreRowModel, Row, useReactTable,} from "@tanstack/react-table"
@@ -16,10 +15,10 @@ import {
 
 export function Grid<TData, TValue>({
                                         onNext, onPrev,
-                                        currentPage, totalPages, totalRecords,
+                                        // currentPage, totalPages, totalRecords,
                                         columns,
                                         data, onRowClick,
-                                    }: DataTableProps<TData, TValue>) {
+                                    }: DataTableProps<TData, TValue> & { currentPage?: number, totalPages?: number, totalRecords?: number, onNext?: () => void, onPrev?: () => void }) {
     const table = useReactTable({
         data,
         columns,
@@ -58,7 +57,7 @@ export function Grid<TData, TValue>({
                                 <TableRow
                                     key={row.id}
                                     onClick={(event) => {
-                                        onRowClick ? _onRowClicked(event, row) : null;
+                                        _onRowClicked(event, row)
                                     }}
                                     data-state={row.getIsSelected() && "selected"}
                                 >

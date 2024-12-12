@@ -1,5 +1,3 @@
-"use client"
-
 import * as React from "react"
 import * as LabelPrimitive from "@radix-ui/react-label"
 import {Slot} from "@radix-ui/react-slot"
@@ -67,7 +65,7 @@ const FormItem = React.forwardRef<HTMLDivElement,
 
     return (
         <FormItemContext.Provider value={{id}}>
-            <div ref={ref} className={cn("space-y-2", className)} {...props} />
+            <div ref={ref} className={cn("space-y-2", className as string)} {...props} />
         </FormItemContext.Provider>
     )
 })
@@ -80,7 +78,7 @@ const FormLabel = React.forwardRef<React.ElementRef<typeof LabelPrimitive.Root>,
     return (
         <Label
             ref={ref}
-            className={cn(error && "text-destructive", className)}
+            className={cn(error && "text-destructive", className as string)}
             htmlFor={formItemId}
             {...props}
         />
@@ -116,7 +114,7 @@ const FormDescription = React.forwardRef<HTMLParagraphElement,
         <p
             ref={ref}
             id={formDescriptionId}
-            className={cn("text-sm text-muted-foreground", className)}
+            className={cn("text-sm text-muted-foreground", className as string)}
             {...props}
         />
     )
@@ -136,7 +134,7 @@ const FormMessage = React.forwardRef<HTMLParagraphElement,
         <p
             ref={ref}
             id={formMessageId}
-            className={cn("text-sm font-medium text-destructive", className)}
+            className={cn("text-sm font-medium text-destructive", className as string)}
             {...props}
         >
             {body}

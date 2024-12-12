@@ -17,7 +17,11 @@ const requestMethods = {
  * @param {Object} [options.body] - Request payload for POST/PUT/PATCH.
  * @returns {Promise<Object>} - Returns the parsed JSON response or throws an error.
  */
-export async function request(url, {method = requestMethods.GET, headers = {}, body} = {}) {
+export async function request(url: string, {
+    method = requestMethods.GET,
+    headers = {},
+    body
+}: { method?: string, headers?: Record<string, any>, body?: Record<string, any> } = {}) {
     console.log('body', body)
     try {
         const fetchOptions = {
@@ -36,7 +40,7 @@ export async function request(url, {method = requestMethods.GET, headers = {}, b
 
         if (!response.ok) {
             // Handle HTTP errors
-            const errorData = await response.json().catch(() => null); // Gracefully handle invalid JSON
+            const errorData = await response.json();
             throw new Error(
                 errorData?.message || `Request failed with status: ${response.status}`
             );
@@ -44,7 +48,7 @@ export async function request(url, {method = requestMethods.GET, headers = {}, b
         // Return parsed JSON or an empty object for no content
         return await response.json()
 
-    } catch (error) {
+    } catch (error: any) {
         // Graceful error logging
         console.error(`HTTP Request Error: ${error.message}`);
         throw error; // Re-throw for higher-level handling
@@ -52,17 +56,11 @@ export async function request(url, {method = requestMethods.GET, headers = {}, b
 }
 
 // Convenience methods
-export const get = (url, headers) =>
+export const get = (url: string, headers?: Record<string, any>) =>
     request(url, {method: requestMethods.GET, headers});
 
-export const post = (url, body, headers) =>
+export const post = (url: string, body?: Record<string, any>, headers?: Record<string, any>) =>
     request(url, {method: requestMethods.POST, body, headers});
 
-export const put = (url, body, headers) =>
-    request(url, {method: requestMethods.PUT, body, headers});
-
-export const del = (url, headers) =>
+export const del = (url: string, headers?: Record<string, any>) =>
     request(url, {method: requestMethods.DELETE, headers});
-
-export const patch = (url, body, headers) =>
-    request(url, {method: requestMethods.PATCH, body, headers});

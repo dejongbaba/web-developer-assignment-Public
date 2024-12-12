@@ -1,7 +1,4 @@
-import React from 'react';
-import {HeadingProp} from "@/lib/definitions";
-
-function Heading({title}: HeadingProp) {
+function Heading({title}: { title: string }) {
     return (
         <h1 className='text-5xl font-semibold tracking-tight'>{title}</h1>
     );

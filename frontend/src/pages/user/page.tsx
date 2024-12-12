@@ -1,17 +1,19 @@
-import React, {useState} from 'react';
+// import React, {useState} from 'react';
 import {useQuery} from "@tanstack/react-query";
 import {getUsers} from "@/services/users";
 import Grid from "@/components/ui/grid";
 import {userColumns} from "@/pages/user/columns";
 import {useNavigate} from "react-router";
 import Heading from "@/components/ui/heading";
+import {User} from "@/lib/definitions";
+import {Row} from "@tanstack/react-table";
 
 const UserPage = () => {
 
-    const [params, setParams] = useState({})
+    // const [params, setParams] = useState({})
     const {data, error, isLoading} = useQuery<Response, Error, any>({
         queryKey: ['users'],
-        queryFn: () => getUsers(params)
+        queryFn: () => getUsers()
     })
 
     const router = useNavigate();
@@ -26,7 +28,7 @@ const UserPage = () => {
         </div>
     }
     console.log('user page', data);
-    const onRowClick = (row) => {
+    const onRowClick = (row: Row<User>) => {
         router(`/users/${row?.original?.id}/posts`)
     }
     return (
