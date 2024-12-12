@@ -1,6 +1,5 @@
-import React from 'react';
-import Heading from "@/components/ui/Heading";
-import Back from "@/components/ui/Back";
+import Heading from "@/components/ui/heading";
+import Back from "@/components/ui/back";
 import PostGrid from "@/components/ui/post-grid";
 import {useMutation, useQuery} from "@tanstack/react-query";
 import {deletePost, getUsersPost} from "@/services/posts";
@@ -8,17 +7,21 @@ import {useParams} from "react-router";
 import {useToast} from "@/hooks/use-toast";
 import SubHeading from "@/components/ui/sub-heading";
 
-const PostPage = (props) => {
+const PostPage = () => {
     //fetch posts with id
 
     const {id} = useParams();
     console.log('id', id)
     const {toast} = useToast();
-    const {data: posts, refetch, error, loading} = useQuery({queryKey: ['user-post'], queryFn: () => getUsersPost(id)});
+    const {data: posts, refetch, error, isLoading} = useQuery({
+        queryKey: ['user-post'],
+        queryFn: () => getUsersPost(id as string)
+    });
     const {mutate} = useMutation<Response, Error, number>({
         mutationKey: ['delete-post'],
         mutationFn: (id) => deletePost(id),
         onSuccess: (res) => {
+            console.log('res', res)
             refetch()
             toast({title: 'Success', description: 'Deleted post successfully!', className: "bg-green-500 text-white"})
         },
@@ -35,7 +38,7 @@ const PostPage = (props) => {
     if (error) {
         return 'Something went wrong'
     }
-    if (loading) {
+    if (isLoading) {
         return 'Loading...'
     }
     return (

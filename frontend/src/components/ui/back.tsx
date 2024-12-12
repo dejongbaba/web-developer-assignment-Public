@@ -1,4 +1,3 @@
-import React from 'react';
 import {BackProp} from "@/lib/definitions";
 import {ArrowLeft} from "lucide-react";
 import {useNavigate} from "react-router";

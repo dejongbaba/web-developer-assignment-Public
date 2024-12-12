@@ -1,4 +1,3 @@
-import React from 'react';
 import {PostGridProp} from "@/lib/definitions";
 import PostCard from "@/components/ui/post-card";
 import PostModal from "@/components/ui/post-modal";
@@ -19,7 +18,8 @@ function PostGrid({posts, onComplete, onDeletePost}: PostGridProp) {
                         <PostCard type='create'/>
                     </div>
                 </PostModal>
-                {!!posts?.length ? posts.map((p) => <PostCard id={p.id} title={p.title} body={p.body}
+                {!!posts?.length ? posts.map((p) => <PostCard type='read' id={p.id as number} title={p.title as string}
+                                                              body={p.body as string}
                                                               onDelete={onDeletePost}/>) : <EmptyPost/>}
             </div>
         </>

@@ -1,6 +1,7 @@
 import {ColumnDef, Row} from "@tanstack/react-table";
 
 export interface User {
+    id?: string
     fullName: string
     emailAddress: string
     address: Address
@@ -18,12 +19,12 @@ export interface BackProp {
 export interface PostGridProp {
     posts: Post[],
     onDeletePost: (id: number) => void
-    onComplete: (res: Response) => void
+    onComplete: (res: Record<string, any>) => void
 
 }
 
 export interface PostCardProp extends Post {
-    onDelete: (id: number) => void
+    onDelete?: (id: number) => void
     type: "create" | 'read'
 }
 
@@ -31,19 +32,18 @@ export interface Address {
     street: number
     state: string
     city: string
-    zipCode: string
+    zipcode: string
 }
 
 export interface Post {
-    title: string
-    userId: number
-    id: number
-    body: string
+    title?: string
+    userId?: string
+    id?: number
+    body?: string
 }
 
 export interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[],
-
-    onRowClicked?(row: Row<TData>): void;
+    onRowClick: (row: Row<TData>) => void;
 }
