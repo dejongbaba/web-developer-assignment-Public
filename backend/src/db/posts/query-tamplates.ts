@@ -14,6 +14,6 @@ WHERE id = ?
 `;
 
 export const insertPostTemplate = `
-INSERT INTO posts (user_id, title, body, created_at)
-VALUES (?, ?, ?, ?)
+INSERT INTO posts (id,user_id, title, body, created_at)
+VALUES (?, ?, ?, ?, ?)
 `;

@@ -2,9 +2,14 @@ import {ColumnDef, Row} from "@tanstack/react-table";
 
 export interface User {
     id?: string
-    fullName: string
-    emailAddress: string
+    name: string
+    email: string
     address: Address
+}
+
+export interface PageParams {
+    pageIndex: number
+    pageSize: number
 }
 
 export interface HeadingProp {

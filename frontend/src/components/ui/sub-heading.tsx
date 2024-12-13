@@ -9,7 +9,7 @@ function SubHeading({email, postCount}: HeadingProp) {
         return `${posts} post`
     }
     return (
-        <div className='text-sm font-normal'>
+        <div className='mb-6 text-sm font-normal'>
             <span className='text-muted-foreground'>{email}</span> <span
             className='font-normal'>&#x2022; {postsToText(postCount)}</span></div>
     );
