@@ -55,10 +55,16 @@ export async function request(url: string, {
     }
 }
 
-// Convenience methods
-export const get = (url: string, headers?: Record<string, any>) =>
-    request(url, {method: requestMethods.GET, headers});
+function buildQueryString(params) {
+    const query = new URLSearchParams(params).toString();
+    return query ? `?${query}` : '';
+}
 
+// Convenience methods
+export const get = (url, params = {}, headers) => {
+    const queryString = buildQueryString(params);
+    return request(`${url}${queryString}`, {method: requestMethods.GET, headers});
+};
 export const post = (url: string, body?: Record<string, any>, headers?: Record<string, any>) =>
     request(url, {method: requestMethods.POST, body, headers});
 
