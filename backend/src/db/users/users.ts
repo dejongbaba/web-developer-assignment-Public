@@ -61,7 +61,7 @@ export const getUsers = (
                             users: formattedResults,
                             totalRecords,
                             totalPages,
-                            currentPage: pageNumber + 1, // Assuming pageNumber is 0-based
+                            currentPage: pageNumber,
                         });
                     }
                 );
