@@ -15,10 +15,10 @@ import {
 
 export function Grid<TData, TValue>({
                                         onNext, onPrev,
-                                        currentPage, totalPages, totalRecords,
+                                        currentPage, totalPages,
                                         columns, onPageClick,
                                         data, onRowClick,
-                                    }: DataTableProps<TData, TValue> & { currentPage?: number, totalPages?: number, totalRecords?: number, onNext?: () => void, onPageClick?: (page: number) => void, onPrev?: () => void }) {
+                                    }: DataTableProps<TData, TValue> & { currentPage: number, totalPages: number, totalRecords?: number, onNext?: () => void, onPageClick?: (page: number) => void, onPrev?: () => void }) {
     const table = useReactTable({
         data,
         columns,
@@ -45,7 +45,6 @@ export function Grid<TData, TValue>({
 
         // Render the visible page numbers
         for (let i = startPage; i <= endPage; i++) {
-            console.log('active', i, currentPage)
             pageNumbers.push(
                 <PaginationItem key={i}>
                     <PaginationLink

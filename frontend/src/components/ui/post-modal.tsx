@@ -28,7 +28,7 @@ function PostModal({children, onComplete}: { children: ReactNode, onComplete: (r
     });
     const [open, setOpen] = useState(false);
     const {toast} = useToast();
-    const {mutate, isPending} = useMutation<Record<string, any>, Error, FormType>({
+    const {mutate, isPending} = useMutation<Record<string, any>, { error: string }, FormType>({
         mutationKey: ['create-post'],
         mutationFn: (val) => addPost({title: val.title, userId: val.userId, body: val.body}),
         onSuccess: (res) => {

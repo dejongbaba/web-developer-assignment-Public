@@ -55,13 +55,13 @@ export async function request(url: string, {
     }
 }
 
-function buildQueryString(params) {
+function buildQueryString(params: Record<string, any>) {
     const query = new URLSearchParams(params).toString();
     return query ? `?${query}` : '';
 }
 
 // Convenience methods
-export const get = (url, params = {}, headers) => {
+export const get = (url: string, params = {}, headers?: Record<string, any>) => {
     const queryString = buildQueryString(params);
     return request(`${url}${queryString}`, {method: requestMethods.GET, headers});
 };
