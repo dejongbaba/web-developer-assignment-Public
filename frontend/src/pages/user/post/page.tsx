@@ -1,22 +1,25 @@
-import Heading from "@/components/ui/heading";
 import Back from "@/components/ui/back";
 import PostGrid from "@/components/ui/post-grid";
 import {useMutation, useQuery} from "@tanstack/react-query";
 import {deletePost, getUsersPost} from "@/services/posts";
-import {useParams} from "react-router";
+import {useLocation, useParams} from "react-router";
 import {useToast} from "@/hooks/use-toast";
 import SubHeading from "@/components/ui/sub-heading";
+import Loader from "@/components/ui/loader";
 
 const PostPage = () => {
     //fetch posts with id
 
     const {id} = useParams();
+    const {state} = useLocation();
+    const {name, email} = state;
     console.log('id', id)
     const {toast} = useToast();
-    const {data: posts, refetch, error, isLoading} = useQuery({
+    const {data, refetch, error, isLoading} = useQuery({
         queryKey: ['user-post'],
         queryFn: () => getUsersPost(id as string)
     });
+
     const {mutate} = useMutation<Response, Error, number>({
         mutationKey: ['delete-post'],
         mutationFn: (id) => deletePost(id),
@@ -34,20 +37,20 @@ const PostPage = () => {
             })
         }
     });
-    console.log('posts', posts)
+    console.log('name', state)
     if (error) {
         return 'Something went wrong'
     }
     if (isLoading) {
-        return 'Loading...'
+        return <Loader/>
     }
     return (
-        <div className='max-w-3xl m-auto lg:my-16 p-4'>
-            <div className='space-y-4'>
+        <div className='max-w-4xl m-auto lg:my-16 p-4'>
+            <div className=''>
                 <Back title='Back to Users'/>
-                <Heading title="Posts"/>
-                <SubHeading postCount={4} email={'demo@email.com'}/>
-                <PostGrid onComplete={() => refetch()} onDeletePost={(postId) => mutate(postId)} posts={posts}/>
+                <h1 className='text-5xl mb-4'>{name}</h1>
+                <SubHeading postCount={data.count} email={email}/>
+                <PostGrid onComplete={() => refetch()} onDeletePost={(postId) => mutate(postId)} posts={data.posts}/>
             </div>
         </div>
     );
