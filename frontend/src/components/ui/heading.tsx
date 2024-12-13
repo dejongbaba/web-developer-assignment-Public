@@ -1,6 +1,6 @@
 function Heading({title}: { title: string }) {
     return (
-        <h1 className='text-5xl font-semibold tracking-tight'>{title}</h1>
+        <h1 className='mb-3 text-[5rem] font-[500] tracking-tight'>{title}</h1>
     );
 }
 

@@ -11,7 +11,6 @@ import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/
 import {Input} from "@/components/ui/input";
 import {Textarea} from "@/components/ui/textarea";
 import {useToast} from "@/hooks/use-toast";
-import Heading from "@/components/ui/heading";
 
 
 const FormSchema = z.object({
@@ -40,6 +39,13 @@ function PostModal({children, onComplete}: { children: ReactNode, onComplete: (r
             })
             setOpen(false);
             onComplete && onComplete(res)
+        },
+        onError: (e) => {
+            toast({
+                title: "Error",
+                description: e?.error || "Something went wrong!",
+                className: "bg-red-500 text-white"
+            })
         }
     })
     const onSubmit = (value: FormType) => {
@@ -52,9 +58,9 @@ function PostModal({children, onComplete}: { children: ReactNode, onComplete: (r
             <DialogTrigger asChild>
                 {children ? children : <span>Open</span>}
             </DialogTrigger>
-            <DialogContent>
-                <DialogHeader>
-                    <Heading title='New Post'/>
+            <DialogContent className='rounded-lg max-w-[80%] lg:w-[700px]'>
+                <DialogHeader className='text-left'>
+                    <h1 className='text-3xl'>New Post</h1>
                 </DialogHeader>
                 <Form {...form}>
                     <form className='space-y-4' onSubmit={form.handleSubmit(onSubmit)}>
@@ -63,7 +69,7 @@ function PostModal({children, onComplete}: { children: ReactNode, onComplete: (r
                             name="title"
                             render={({field}) => (
                                 <FormItem>
-                                    <FormLabel className='text-lg'>Post Title</FormLabel>
+                                    <FormLabel className='text-md text-gray-600'>Post Title</FormLabel>
                                     <FormControl>
                                         <Input placeholder="Give your post a title" {...field} />
                                     </FormControl>
@@ -76,16 +82,17 @@ function PostModal({children, onComplete}: { children: ReactNode, onComplete: (r
                             name="body"
                             render={({field}) => (
                                 <FormItem>
-                                    <FormLabel className='text-lg'>Post Content</FormLabel>
+                                    <FormLabel className='text-md text-gray-600'>Post Content</FormLabel>
                                     <FormControl>
-                                        <Textarea placeholder="Write something mind-blowing" {...field} />
+                                        <Textarea className='h-[180px]'
+                                                  placeholder="Write something mind-blowing" {...field} />
                                     </FormControl>
                                     <FormMessage/>
                                 </FormItem>
                             )}
                         />
-                        <DialogFooter>
-                            <DialogClose>
+                        <DialogFooter className='flex justify-end gap-2'>
+                            <DialogClose asChild>
                                 <Button variant='outline'>Cancel</Button>
                             </DialogClose>
                             <Button loading={isPending} disabled={isPending} type='submit'>Publish</Button>
